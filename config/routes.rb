@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
-  root 'homepage#index'
+  root "homepage#index"
+  get "*path", to: "homepage#index", constraints: ->(req) { !req.xhr? && req.format.html? }
+
+  namespace :api do
+    namespace :v1 do
+      post   "/login",  to: "sessions#login"
+      delete "/logout", to: "sessions#destroy"
+
+      resources :readings, only: [:create, :index, :show, :update, :destroy]
+      get 'reports/daily', to: 'reports#daily'
+      get 'reports/monthly', to: 'reports#monthly'
+      get 'reports/month_to_date', to: 'reports#month_to_date'
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
