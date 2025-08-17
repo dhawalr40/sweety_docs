@@ -3,7 +3,9 @@ class Api::V1::ReadingsController < ApplicationController
 
   def index
     readings = @current_user.blood_glucose_readings.order(recorded_at: :desc)
-    render json: { data: readings }, status: :ok
+    render json: { data: readings , message: "Fetched Successfully" }, status: :ok
+  rescue StandardError => e
+    render json: { data: {}, error: e.message }, status: :unprocessable_entity
   end
 
   def create

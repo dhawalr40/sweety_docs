@@ -1,9 +1,9 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import Home from "../components/Home";
-import Login from "../components/Login"
+import Login from "../components/Auth/Login"
 // import Signup from "./components/Signup";
-import Dashboard from "../components/Dashboard";
+import Dashboard from "../components/Pages/Dashboard";
 
 export default (
     <Router>

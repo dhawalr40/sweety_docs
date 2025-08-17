@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-
+  before_action :disable_http_cache
   def not_found
     render json: { error: 'not_found' }
   end
@@ -15,5 +15,11 @@ class ApplicationController < ActionController::API
     rescue JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
     end
+  end
+
+  private
+
+  def disable_http_cache
+    response.headers["Cache-Control"] = "no-store"
   end
 end
